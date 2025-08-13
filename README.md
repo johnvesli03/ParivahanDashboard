@@ -1,6 +1,6 @@
 # Vahan Vehicle Registration Dashboard
 
-![Vahan Dashboard]<img width="1919" height="915" alt="Screenshot 2025-08-13 115148" src="https://github.com/user-attachments/assets/38ea3ca6-4c6c-47e9-a870-896aa96808b5" />
+[Vahan Dashboard]<img width="1919" height="915" alt="Screenshot 2025-08-13 115148" src="https://github.com/user-attachments/assets/38ea3ca6-4c6c-47e9-a870-896aa96808b5" />
 )
 
 ## 🚀 Project Overview
