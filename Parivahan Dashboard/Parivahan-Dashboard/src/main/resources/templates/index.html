@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vahan Dashboard</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="title-container">
+            <img th:src="@{/Emblem_of_India.svg}" alt="Indian Emblem" class="emblem">
+            <!-- UPDATED: Title is now split into two lines -->
+            <div class="title-text">
+                <span class="title-line-1">VAHAN</span>
+                <span class="title-line-2">DASHBOARD</span>
+            </div>
+        </div>
+        <nav><a href="#">Home</a></nav>
+    </div>
+</header>
+<div class="container">
+    <div class="filter-panel">
+        <form action="/" method="get" class="filter-form">
+            <div class="form-group"><label for="state-select">State:</label><select id="state-select" name="stateName" onchange="this.form.submit()"><option value="All States" th:selected="${selectedState == 'All States'}">All India</option><option th:each="state : ${states}" th:value="${state}" th:text="${state}" th:selected="${state == selectedState}"></option></select></div>
+            <div class="form-group"><label for="year-select">Year:</label><select id="year-select" name="year" onchange="this.form.submit()"><option th:each="y : ${years}" th:value="${y}" th:text="${y}" th:selected="${y == selectedYear}"></option></select></div>
+            <div class="form-group"><label for="quarter-select">Quarter:</label><select id="quarter-select" name="quarter" onchange="this.form.submit()"><option th:each="q : ${quarters}" th:value="${q}" th:text="${q}" th:selected="${q == selectedQuarter}"></option></select></div>
+            <div class="form-group"><label for="manufacturer-select">Manufacturer:</label><select id="manufacturer-select" name="manufacturerName" onchange="this.form.submit()"><option value="All Manufacturers" th:selected="${selectedManufacturer == 'All Manufacturers'}">All Manufacturers</option><option th:each="m : ${manufacturers}" th:value="${m}" th:text="${m}" th:selected="${m == selectedManufacturer}"></option></select></div>
+            <!-- NEW: Refresh Button -->
+            <div class="form-group">
+                <button type="submit" class="refresh-btn">Refresh</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Data Panels (unchanged) -->
+    <div class="data-panel" th:if="${!dashboardData.isEmpty()}">
+        <div class="data-panel-header"><h2 th:text="|Vehicle Class Wise Data for ${dashboardData[0].stateName} (${dashboardData[0].quarter} ${dashboardData[0].year})|"></h2></div>
+        <div class="data-panel-body">
+            <table>
+                <thead><tr><th>Vehicle Class</th><th>Total Registrations</th><th>YoY Growth %</th><th>QoQ Growth %</th></tr></thead>
+                <tbody th:each="data : ${dashboardData}"><th:block th:each="typeEntry : ${data.detailedData}"><tr class="type-header-row"><td colspan="4" th:text="${typeEntry.key == '4W' ? 'FOUR WHEELER' : (typeEntry.key == '2W' ? 'TWO WHEELER' : 'THREE WHEELER')}"></td></tr><tr th:each="classData : ${typeEntry.value}"><td th:text="${classData.className}"></td><td th:text="${#numbers.formatDecimal(classData.count, 1, 'COMMA', 0, 'POINT')}"></td><td th:text="${classData.yoyGrowth + ' %'}" th:classappend="${classData.yoyGrowth > 0 ? 'positive' : 'negative'}"></td><td th:text="${classData.qoqGrowth + ' %'}" th:classappend="${classData.qoqGrowth > 0 ? 'positive' : 'negative'}"></td></tr></th:block></tbody>
+            </table>
+            <p th:if="${dashboardData[0].detailedData.isEmpty()}" style="text-align: center; padding: 20px;">No vehicle class data available for the selected filters.</p>
+        </div>
+    </div>
+    <div class="data-panel" style="margin-top: 20px;" th:if="${!dashboardData.isEmpty() and selectedManufacturer == 'All Manufacturers'}">
+        <div class="data-panel-header"><h2 th:text="|Manufacturer Wise Data for ${dashboardData[0].stateName} (${dashboardData[0].quarter} ${dashboardData[0].year})|"></h2></div>
+        <div class="data-panel-body">
+            <table>
+                <thead><tr><th>Manufacturer</th><th>Total Registrations</th><th>YoY Growth %</th><th>QoQ Growth %</th></tr></thead>
+                <tbody><tr th:each="manData : ${dashboardData[0].manufacturerData}"><td th:text="${manData.manufacturerName}"></td><td th:text="${#numbers.formatDecimal(manData.count, 1, 'COMMA', 0, 'POINT')}"></td><td th:text="${manData.yoyGrowth + ' %'}" th:classappend="${manData.yoyGrowth > 0 ? 'positive' : 'negative'}"></td><td th:text="${manData.qoqGrowth + ' %'}" th:classappend="${manData.qoqGrowth > 0 ? 'positive' : 'negative'}"></td></tr></tbody>
+            </table>
+            <p th:if="${dashboardData[0].manufacturerData.isEmpty()}" style="text-align: center; padding: 20px;">No manufacturer data available for the selected filters.</p>
+        </div>
+    </div>
+</div>
+<script th:src="@{/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+com\example\Parivahan\Dashboard\Data\DashboardDataDto.class
+com\example\Parivahan\Dashboard\Controller\DashboardController.class
+com\example\Parivahan\Dashboard\Util\CalculationUtil.class
+com\example\Parivahan\Dashboard\ParivahanDashboardApplication.class
+com\example\Parivahan\Dashboard\Service\DashboardService.class
+com\example\Parivahan\Dashboard\model\VehicleData.class
+com\example\Parivahan\Dashboard\repository\VehicleDataRepository.class
+com\example\Parivahan\Dashboard\Service\DashboardServiceImpl.class
