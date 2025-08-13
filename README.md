@@ -1,6 +1,6 @@
 # Vahan Vehicle Registration Dashboard
 
-![Vahan Dashboard Final Screenshot](https://i.imgur.com/05ebed.png)
+![Vahan Dashboard](https://drive.google.com/file/d/1vIgsykmsiLZ370dF_LizWx3jZ2gs3QLT/view?usp=drive_link)
 
 ## 🚀 Project Overview
 
